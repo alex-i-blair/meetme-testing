@@ -9,7 +9,7 @@ describe('App', () => {
     const headerImage = await screen.findByRole('img', { alt: /Alchemy Logo/i })
 
     return waitFor(() => {
-      const headerText = screen.findByText(/meet /i + expect.any(String))
+      const headerText = screen.getByLabelText(/meet vonta/i)
     })
   })
 })

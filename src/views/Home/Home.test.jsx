@@ -1,7 +1,7 @@
 import { render, screen, waitFor, watForElementToBeRemoved } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import Home from './Home'
-import App from '../../App'
+import Layout from '../Layout/Layout'
 
 const user = {
   id: 1,
@@ -14,18 +14,19 @@ const user = {
   color: 'crimson',
 }
 
-test('Should render the user profile', () => {
+test('Should render the user profile', async () => {
   render(
-    <MemoryRouter>
+    <Layout user={user}>
       <Home user={user} />
-    </MemoryRouter>
+    </Layout>
   )
-  const header = screen.findByRole('header', { name: /interests/i })
-  const avatar = screen.findByRole('img', { name: /avatar/i })
-  const headerImage = screen.findByRole('img', { alt: /Alchemy Logo/i })
-  const list = screen.findByRole('list')
+  const headerImage = await screen.findByRole('img', { name: /Alchemy Logo/i })
+
+  const header = await screen.findByRole('heading', { name: /interests/i })
+  const list = await screen.findByRole('list')
   return waitFor(() => {
-    const name = screen.getByText(/vonta/i)
+    const avatar = screen.getByRole('img', { name: /avatar/i })
+    const name = screen.getByRole('heading', { name: /vonta/i })
     const motto = screen.getByText(/res non verba/i)
   })
 })
